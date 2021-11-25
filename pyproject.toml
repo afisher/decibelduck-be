@@ -10,9 +10,12 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.8"
 fastapi = "^0.70.0"
+uvicorn = "^0.15.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+isort = "^5.10.1"
+black = "^21.11b1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
