@@ -14,15 +14,15 @@
 - [ ] parameter store for terraform
 - [ ] vpc
     - [ ] igw
-- [ ] firestore
-- [ ] secrets store
+- [x] sql instance
+- [x] secrets store
 - [ ] gs bucket for files
 
 ### (each release)
 - [ ] cloud run deployment
 
 
-## up and running from zero
+## New contributor, up and running
 
 1. Install Python 3.8
 
@@ -45,15 +45,28 @@
     </details>
 
 ```
+TBD!
+
+New contributors will follow these steps to get a new dev environment.
+cd infra
+...
+gcloud auth application-default login
+...
+```
+
+----
+
+## Rebuilding internal infrastructure?
+
+### **These steps are for recreating the INTERNAL infrastructure.**
+**Project contributors do not need to run these steps unless a catastrophe has occurred and we're starting over.**
+
+
+```
 cd infra
 ./tools/bootstrap-internal
 gcloud auth application-default login
-```
-
-Create yourname.auto.tfvars
-
-```
-env_label = "yourname"
-# extra_label = "anything you want, like a case number" (optional)
-user_account_email = "your@email"
+cd terraform/internal
+terraform plan -out plan.out
+terraform apply
 ```
