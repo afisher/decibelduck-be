@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+eat() {
+    "$@" >/dev/null 2>&1
+}
+
+
+project=decibelduck-internal
+bucket=gs://tfstate1-decibelduck-com
+service_acct=tfstate1
+service_acct_email=tfstate1@decibelduck-internal.iam.gserviceaccount.com
+iam_role_bucket=tfstate1-bucket-owner
+iam_role_bucket_id=tfstate1_bucket_owner
+
+
+# create internal project
+if ! eat gcloud projects describe decibelduck-internal; then
+    gcloud projects create --set-as-default decibelduck-internal
+fi
+
+# create service account to own tfstate bucket; enable impersonation
+if ! eat gcloud service-accounts describe $service_acct; then
+    gcloud --project $project \
+        iam service-accounts create $service_acct \
+            --description "ownership of tfstate1.decibelduck.com bucket"
+    gcloud services enable --project $project iamcredentials.googleapis.com
+fi
+
+# create tfstate bucket; grant admin rights to the service account above
+if ! eat gsutil ls $bucket; then
+    gsutil mb --pap enforced -l us-west1 -b on $bucket
+    gsutil versioning set on $bucket
+    gsutil iam ch serviceAccount:$service_acct_email:objectAdmin $bucket
+fi
