@@ -9,7 +9,9 @@ from decibelduck.log import logger
 
 
 # start with an unconnected database and init later
-_database = peewee_async.PostgresqlDatabase(CONFIG.pgdatabase)
+_database = peewee_async.PostgresqlDatabase(None)
+
+
 class TestModel(peewee.Model):
     """
     Throwaway model, for poc only
@@ -30,12 +32,9 @@ async def do_database_thing():
 
     objects = peewee_async.Manager(_database)
 
-    async def handler():
-        await objects.create(TestModel, text="Not bad. Watch this, I'm async!")
-        all_objects = await objects.execute(TestModel.select())
-        for obj in all_objects:
-            logger.info(obj.text)
-        with _database.allow_sync():
-            TestModel.drop_table(True)
-
-    await handler()
+    await objects.create(TestModel, text="I'm quacking up!")
+    all_objects = await objects.execute(TestModel.select())
+    for obj in all_objects:
+        logger.info(obj.text)
+    with _database.allow_sync():
+        TestModel.drop_table(True)
