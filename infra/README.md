@@ -67,6 +67,7 @@ cd infra
 ./tools/bootstrap-internal
 gcloud auth application-default login
 cd terraform/internal
+terraform init
 terraform plan -out plan.out
 terraform apply
 ```
