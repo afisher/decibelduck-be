@@ -9,11 +9,11 @@ eat() {
 
 
 project=decibelduck-internal
-bucket=gs://tfstate1-decibelduck-com
-service_acct=tfstate1
-service_acct_email=tfstate1@decibelduck-internal.iam.gserviceaccount.com
-iam_role_bucket=tfstate1-bucket-owner
-iam_role_bucket_id=tfstate1_bucket_owner
+bucket=gs://tfstate-decibelduck-com
+service_acct=tfstate
+service_acct_email=tfstate@decibelduck-internal.iam.gserviceaccount.com
+iam_role_bucket=tfstate-bucket-owner
+iam_role_bucket_id=tfstate_bucket_owner
 
 
 # create internal project
@@ -25,7 +25,7 @@ fi
 if ! eat gcloud service-accounts describe $service_acct; then
     gcloud --project $project \
         iam service-accounts create $service_acct \
-            --description "ownership of tfstate1.decibelduck.com bucket"
+            --description "ownership of tfstate-decibelduck-com bucket"
     gcloud services enable --project $project iamcredentials.googleapis.com
 fi
 

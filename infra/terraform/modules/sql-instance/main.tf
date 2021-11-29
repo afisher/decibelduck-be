@@ -1,5 +1,5 @@
 provider "google" {
-  project = "decibelduck-internal"
+  project = var.project
   region  = "us-west1"
 }
 

@@ -1,5 +1,5 @@
 provider "google" {
-  project = "decibelduck-internal"
+  project = var.project
   region  = "us-west1"
 }
 
@@ -17,6 +17,7 @@ resource "google_sql_user" "user" {
 
 module "user_password" {
   source = "../secret"
+  project = var.project
   id = "sqluser__${replace(google_sql_user.user.instance, "-", "_")}__${google_sql_user.user.name}__password"
   data = random_string.user_password.result
 }
