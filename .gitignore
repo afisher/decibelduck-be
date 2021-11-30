@@ -1,6 +1,6 @@
 *.pyc
 
-.terraform*
+.terraform
 
 *.code-workspace
 
