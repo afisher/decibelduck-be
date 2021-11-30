@@ -1,3 +1,7 @@
 *.pyc
 
+.terraform*
+
 *.code-workspace
+
+/.env
