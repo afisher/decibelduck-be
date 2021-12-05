@@ -36,9 +36,9 @@ async def sounds() -> SoundFileList:
 
 
 @app.on_event("startup")
-async def startup_server():
+async def logging_on():
     """
-    Connect to the database at FastAPI startup
+    Turn on logging
     """
     uvicornLogger = logging.getLogger("uvicorn")
     uvicornLogger.propagate = False
@@ -46,4 +46,10 @@ async def startup_server():
 
     logger.info("starting")
 
+
+## @app.on_event("startup")
+async def attach_database():
+    """
+    Connect to the database at FastAPI startup
+    """
     await database.do_database_thing()
