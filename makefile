@@ -32,9 +32,10 @@ cloud-build:
 	gcloud builds submit --tag $(DOCKER_REPO):$(DOCKER_TAG) .
 
 cloud-run:
-	gcloud run deploy decibelduck-be \
+	gcloud run deploy $(CLOUD_SERVICE) \
 		--image=$(DOCKER_REPO):$(DOCKER_TAG) \
 		--port=8000 \
+		--no-allow-unauthenticated \
 		--region=us-west1
 
 podman-build:
