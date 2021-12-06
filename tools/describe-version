@@ -11,7 +11,7 @@ git-describe() {
 
 version="$(git-describe --exact-match || true)"
 if [[ "$version" == "" ]]; then
-    version="$(git-describe)~wip"
+    version="$(git-describe).wip"
 fi
 
 echo "$version"
