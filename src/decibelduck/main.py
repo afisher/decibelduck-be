@@ -7,8 +7,7 @@ from fastapi import FastAPI
 
 from decibelduck import database
 from decibelduck.log import logger
-from decibelduck.soundfile import SoundFileList, SoundFile
-
+from decibelduck.soundfile import SoundFile, SoundFileList
 
 app = FastAPI()
 
