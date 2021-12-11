@@ -52,3 +52,19 @@ podman-clean:
 		| cut -s -d, -f1 \
 		| while read i; do $(PODMAN) kill $$i; sleep 0.6; $(PODMAN) rm $$i; done
 	$(PODMAN) rmi $(DOCKER_REPO):$(DOCKER_TAG) || true
+
+cloud-run-sql:
+	gcloud run deploy $(CLOUD_SERVICE) \
+		--image $(DOCKER_REPO):$(DOCKER_TAG) \
+		--region=us-west1 \
+		--no-allow-unauthenticated \
+		--add-cloudsql-instances decibelduck-internal:us-west1:dev-instance \
+		--set-env-vars INSTANCE_CONNECTION_NAME="decibelduck-internal:us-west1:dev-instance" \
+		--set-env-vars CLOUD_SQL_CONNECTION_NAME="decibelduck-internal:us-west1:dev-instance" \
+		--set-env-vars DB_NAME="ducky" \
+		--set-env-vars DB_USER="ducky" \
+		--set-env-vars DB_PASS="xxxx" \
+		--set-env-vars PGDATABASE="ducky" \
+		--set-env-vars PGUSER="ducky" \
+		--set-env-vars PGHOST="/cloudsql/decibelduck-internal:us-west1:dev-instance" \
+		--set-env-vars PGPASSWORD="xxxx"

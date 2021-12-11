@@ -46,7 +46,7 @@ async def logging_on():
     logger.info("starting")
 
 
-## @app.on_event("startup")
+@app.on_event("startup")
 async def attach_database():
     """
     Connect to the database at FastAPI startup
