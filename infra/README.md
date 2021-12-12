@@ -12,14 +12,12 @@
 - [x] dns zone for decibelduck.com
 - [x] state bucket for terraform
 - [ ] parameter store for terraform
-- [ ] vpc
-    - [ ] igw
 - [x] sql instance
 - [x] secrets store
 - [ ] gs bucket for files
 
 ### (each release)
-- [ ] cloud run deployment
+- [x] cloud run deployment
 
 
 ## New contributor, up and running

@@ -5,6 +5,7 @@ DOCKER_REPO := $(DOCKER_REPO_ARCHIVE)/decibelduck-api/decibelduck-api
 DOCKER_TAG := $(shell ./tools/describe-version)
 CLOUD_SERVICE := decibelduckapi
 DD_CLOUDSQL_CONNECTION := decibelduck-internal:us-west1:dev-instance
+PGPASSWORD_SECRET_KEY := sqluser__dev_instance__ducky__password:latest
 
 PODMAN := podman -r
 
@@ -37,11 +38,11 @@ cloud-run: checkenv-DD_CLOUDSQL_CONNECTION checkenv-PGDATABASE checkenv-PGUSER c
 		--image=$(DOCKER_REPO):$(DOCKER_TAG) \
 		--no-allow-unauthenticated \
 		--region=us-west1 \
-		--add-cloudsql-instances "$$DD_CLOUDSQL_CONNECTION" \
-		--set-env-vars PGHOST="/cloudsql/$$DD_CLOUDSQL_CONNECTION" \
-		--set-env-vars PGDATABASE="$$PGDATABASE" \
-		--set-env-vars PGUSER="$$PGUSER" \
-		--set-env-vars PGPASSWORD="$$PGPASSWORD"
+		--add-cloudsql-instances "$(DD_CLOUDSQL_CONNECTION)" \
+		--set-env-vars PGHOST="/cloudsql/$(DD_CLOUDSQL_CONNECTION)" \
+		--set-env-vars PGDATABASE="$(PGDATABASE)" \
+		--set-env-vars PGUSER="$(PGUSER)" \
+		--update-secrets PGPASSWORD=$(PGPASSWORD_SECRET_KEY)
 
 podman-build:
 	$(PODMAN) build -t $(DOCKER_REPO):$(DOCKER_TAG) .
