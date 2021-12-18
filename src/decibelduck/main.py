@@ -24,17 +24,11 @@ async def root() -> dict:
 
 
 @app.get("/sounds")
-async def sounds() -> SoundFileList:
+def sounds() -> SoundFileList:
     """
     List of SoundFile objects matching a query
     """
-    return SoundFileList(
-        items=[
-            SoundFile(
-                url="https://storage.googleapis.com/sounds-decibelduck-com/ogg/345689__inspectorj__comedic-boing-a.ogg"
-            )
-        ]
-    )
+    return SoundFileList.from_bucket_prefix()
 
 
 @app.on_event("startup")
