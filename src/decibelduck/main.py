@@ -4,12 +4,15 @@ API root - start the ASGI server
 import logging
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from decibelduck import database
+from decibelduck.config import CONFIG
 from decibelduck.log import logger
 from decibelduck.soundfile import SoundFile, SoundFileList
 
 app = FastAPI()
+app.add_middleware(CORSMiddleware, **CONFIG.dd_cors_settings.dict())
 
 
 @app.get("/")

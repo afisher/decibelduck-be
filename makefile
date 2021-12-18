@@ -30,13 +30,13 @@ tidy:
 	black src/
 
 # build a container image with gcloud builds
-cloud-build: 
+cloud-build:
 	gcloud builds submit --tag $(DOCKER_REPO):$(DOCKER_TAG) .
 
 cloud-run: checkenv-DD_CLOUDSQL_CONNECTION checkenv-PGDATABASE checkenv-PGUSER checkenv-PGPASSWORD
 	gcloud run deploy $(CLOUD_SERVICE) \
 		--image=$(DOCKER_REPO):$(DOCKER_TAG) \
-		--no-allow-unauthenticated \
+		--allow-unauthenticated \
 		--region=us-west1 \
 		--add-cloudsql-instances "$(DD_CLOUDSQL_CONNECTION)" \
 		--set-env-vars PGHOST="/cloudsql/$(DD_CLOUDSQL_CONNECTION)" \
