@@ -1,7 +1,9 @@
 *.pyc
+__pycache__
 
 .terraform
 
 *.code-workspace
 
 /.env
+/cloud_sql_proxy

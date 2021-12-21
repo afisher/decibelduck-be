@@ -1,5 +1,20 @@
 #!/usr/bin/env bash
 
+# Build out some decibelduck-internal infrastructure
+#
+# This creates exactly and only the infrastructure needed to run terraform
+# in the decibelduck-internal account, and build the remaining dd-internal
+# resources. This list consists of:
+#
+#  - the decibelduck-internal project itself
+#  - the tfstate bucket, with versioning and private access control
+#  - a service account to own the bucket
+#  - the iamcredentials google API (enabled)
+#  - an iam binding to create the bucket-svcaccount relationship
+#
+# This is meant to be run in an empty google account exactly one time.
+# It is not useful for individual code contributors to the project.
+
 set -euo pipefail
 IFS=$'\n\t'
 

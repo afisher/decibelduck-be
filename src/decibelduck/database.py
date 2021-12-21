@@ -7,7 +7,6 @@ import peewee_async
 from decibelduck.config import CONFIG
 from decibelduck.log import logger
 
-
 # start with an unconnected database and init later
 _database = peewee_async.PostgresqlDatabase(None)
 
@@ -16,6 +15,7 @@ class TestModel(peewee.Model):
     """
     Throwaway model, for poc only
     """
+
     text = peewee.CharField()
 
     class Meta:

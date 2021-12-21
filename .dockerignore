@@ -1,0 +1,11 @@
+/Dockerfile
+/.dockerignore
+/.gcloudignore
+/.git
+/.env
+/infra
+*.code-workspace
+**/*.pyc
+__pycache__
+.terraform
+cloud_sql_proxy
